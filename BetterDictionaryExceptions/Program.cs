@@ -30,7 +30,7 @@ namespace BetterDictionaryExceptions
     {
         static void Main(string[] args)
         {
-            SpeedTest();
+            ExampleUse();
 
             Console.ReadLine();
         }
