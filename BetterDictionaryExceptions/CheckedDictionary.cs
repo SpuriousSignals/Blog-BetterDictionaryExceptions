@@ -56,6 +56,11 @@ namespace BetterDictionaryExceptions
             _dict.Add(key, value);
         }
 
+        void ICollection<KeyValuePair<TKey,TValue>>.Add(KeyValuePair<TKey, TValue> item)
+        {
+            ((ICollection<KeyValuePair<TKey, TValue>>)_dict).Add(item);
+        }
+
         public bool ContainsKey(TKey key)
         {
             return _dict.ContainsKey(key);
@@ -86,11 +91,6 @@ namespace BetterDictionaryExceptions
             get { return _dict.Values; }
         }
 
-        public void Add(KeyValuePair<TKey, TValue> item)
-        {
-            throw new NotImplementedException();
-        }
-
         public void Clear()
         {
             _dict.Clear();
@@ -101,9 +101,9 @@ namespace BetterDictionaryExceptions
             return _dict.Contains(item);
         }
 
-        public void CopyTo(KeyValuePair<TKey, TValue>[] array, int arrayIndex)
+        void ICollection<KeyValuePair<TKey,TValue>>.CopyTo(KeyValuePair<TKey, TValue>[] array, int arrayIndex)
         {
-            throw new NotImplementedException();
+            ((ICollection<KeyValuePair<TKey, TValue>>)_dict).CopyTo(array, arrayIndex);
         }
 
         public int Count
@@ -111,9 +111,9 @@ namespace BetterDictionaryExceptions
             get { return _dict.Count; }
         }
 
-        public bool IsReadOnly
+        bool ICollection<KeyValuePair<TKey, TValue>>.IsReadOnly
         {
-            get { throw new NotImplementedException(); }
+            get { return ((ICollection<KeyValuePair<TKey, TValue>>)_dict).IsReadOnly; }
         }
 
         public IEnumerator<KeyValuePair<TKey, TValue>> GetEnumerator()
