@@ -38,18 +38,41 @@ namespace BetterDictionaryExceptions
         {
             get
             {
-                if (!_dict.ContainsKey(key))
+                TValue value = default(TValue);
+
+                bool found = _dict.TryGetValue(key, out value);
+
+                if (!found)
                 {
                     throw new KeyNotFoundException(String.Format("The key {0} is not present in the dictionary", key));
                 }
 
-                return _dict[key];
+                return value;
             }
             set
             {
                 _dict[key] = value;
             }
         }
+
+        // Alternative approach. Was 40% slower for me when executing the non-exception path. About the same
+        // when executing the exception path, since the exception throw/catch time outweights the dictionary access.
+        //public TValue this[TKey key]
+        //{
+        //    get
+        //    {
+        //        if (!_dict.ContainsKey(key))
+        //        {
+        //            throw new KeyNotFoundException(String.Format("The key {0} is not present in the dictionary", key));
+        //        }
+
+        //        return _dict[key];
+        //    }
+        //    set
+        //    {
+        //        _dict[key] = value;
+        //    }
+        //}
 
         public void Add(TKey key, TValue value)
         {

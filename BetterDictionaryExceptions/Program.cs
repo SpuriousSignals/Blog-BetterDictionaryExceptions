@@ -15,6 +15,7 @@ limitations under the License.*/
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -29,6 +30,13 @@ namespace BetterDictionaryExceptions
     {
         static void Main(string[] args)
         {
+            SpeedTest();
+
+            Console.ReadLine();
+        }
+
+        static void ExampleUse()
+        {
             IDictionary<string, string> baddies = new CheckedDictionary<string, string>();
             baddies.Add("Dalek", "https://en.wikipedia.org/wiki/Dalek");
             baddies.Add("Cyberman", "https://en.wikipedia.org/wiki/Cyberman");
@@ -42,9 +50,29 @@ namespace BetterDictionaryExceptions
             {
                 Console.WriteLine(ex.Message);
             }
+        }
 
+        /// <summary>
+        /// Be sure to run without debugging
+        /// </summary>
+        static void SpeedTest()
+        {
+            IDictionary<string, string> baddies = new CheckedDictionary<string, string>();
 
-            Console.ReadLine();
+            // Assuming most usage will be without the exception case
+            baddies.Add("The Master", "https://en.wikipedia.org/wiki/Master_(Doctor_Who)");
+
+            Stopwatch sw = new Stopwatch();
+            sw.Start();
+
+            for (int i = 0; i < 100000000; i++)
+            {
+                string value = baddies["The Master"];
+            }
+
+            sw.Stop();
+
+            Console.WriteLine(sw.Elapsed.TotalSeconds);
         }
     }
 }
